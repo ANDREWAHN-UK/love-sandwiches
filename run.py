@@ -51,6 +51,30 @@ def validate_data(values):
     return True
 
 
+<<<<<<< HEAD
+=======
+def update_sales_sheet(data):
+    """
+    Updates sales worksheet, adds new row with the list data provided
+    """
+    print("Updating sales worksheet ...\n")
+    sales_worksheet = SHEET.worksheet("sales")
+    sales_worksheet.append_row(data)
+    print("Sales worksheet updated succesfully. \n")
+
+
+def update_surplus_worksheet(data):
+    """
+    Updates surplus worksheet, adds new row with the list data provided
+    """
+    print("Updating surplus worksheet ...\n")
+    sales_worksheet = SHEET.worksheet("surplus")
+    sales_worksheet.append_row(data)
+    print("Surplus worksheet updated succesfully. \n")
+    
+
+
+>>>>>>> 808362b7895b7bf0c6d298d966c1aa4dcbcaf6a2
 def calculate_surplus_data(sales_row):
     """
     Compares sales with stock to calculate a surplus.
@@ -65,6 +89,7 @@ def calculate_surplus_data(sales_row):
         surplus = int(stock) - sales
         surplus_data.append(surplus)
     return surplus_data
+    
 
 
 def update_worksheet(data, worksheet):
@@ -85,7 +110,11 @@ def main():
     sales_data = [int(num) for num in data]
     update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus_data(sales_data)
+<<<<<<< HEAD
     update_worksheet(new_surplus_data, "surplus")
+=======
+    update_surplus_worksheet(new_surplus_data)
+>>>>>>> 808362b7895b7bf0c6d298d966c1aa4dcbcaf6a2
 
 
 print("Welcome to Love Sandwiches Data automation. \n")
