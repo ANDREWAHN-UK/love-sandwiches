@@ -51,16 +51,6 @@ def validate_data(values):
     return True
 
 
-def update_sales_sheet(data):
-    """
-    Updates sales worksheet, adds new row with the list data provided
-    """
-    print("Updating sales worksheet ...\n")
-    sales_worksheet = SHEET.worksheet("sales")
-    sales_worksheet.append_row(data)
-    print("Sales worksheet updated succesfully. \n")
-
-
 def calculate_surplus_data(sales_row):
     """
     Compares sales with stock to calculate a surplus.
@@ -77,15 +67,25 @@ def calculate_surplus_data(sales_row):
     return surplus_data
 
 
+def update_worksheet(data, worksheet):
+    """
+    Receives a list of integers to be inserted into a worksheet and updates the relevant worksheet
+    """
+    print(f"updating {worksheet} worksheet...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} worksheet updated...\n")
+
+
 def main():
     """
     Run all program functions
     """
     data = get_sales_data()
     sales_data = [int(num) for num in data]
-    update_sales_sheet(sales_data)
+    update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus_data(sales_data)
-    print(new_surplus_data)
+    update_worksheet(new_surplus_data, "surplus")
 
 
 print("Welcome to Love Sandwiches Data automation. \n")
