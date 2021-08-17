@@ -1,6 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
+
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -38,12 +38,13 @@ def get_sales_data():
 def validate_data(values):
     """
     Inside the try, converts all string data into integers.
-    Raises ValueError if strings cannot be converted into integers, or if there aren't exactly 6 values
+    Raises ValueError if strings cannot be converted into integers, 
+    or if there aren't exactly 6 values
     """
     try:
         [int(value) for value in values]
         if len(values) != 6:
-            raise ValueError(f"Exactly 6 values required, and you provided {len(values)}")
+            raise ValueError(f"Exactly 6 values required, you provided {len(values)}")
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
         return False
@@ -65,7 +66,6 @@ def calculate_surplus_data(sales_row):
         surplus = int(stock) - sales
         surplus_data.append(surplus)
     return surplus_data
-    
 
 
 def update_worksheet(data, worksheet):
@@ -76,6 +76,19 @@ def update_worksheet(data, worksheet):
     worksheet_to_update = SHEET.worksheet(worksheet)
     worksheet_to_update.append_row(data)
     print(f"{worksheet} worksheet updated...\n")
+
+
+def get_last_five_entries_sales():
+    """
+    Collects the data for the last 5 sales days of each sandwich and returns 
+    them as a list of lists, and in columns
+    """
+    sales = SHEET.worksheet("sales")
+    columns = []
+    for ind in range(1,7):
+        column = sales.col_values(ind)
+        columns.append(column[-5:])
+    return columns
 
 
 def main():
@@ -90,4 +103,6 @@ def main():
 
 
 print("Welcome to Love Sandwiches Data automation. \n")
-main()
+# main()
+
+sales_colums = get_last_five_entries_sales()
